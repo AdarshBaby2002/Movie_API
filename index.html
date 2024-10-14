@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .logo {
+            width: 250px;
+            height: 350px;
+        }
+
+        .col-12 {
+            margin-top: 7px;
+        }
+
+        .diplay-center {
+            display: flex;
+            justify-content: center;
+        }
+        
+    </style>
+</head>
+
+<body>
+
+    <div class="container mt-5 bg-secondary rounded py-3 ">
+        <div class="row d-flex justify-content-center ">
+            <div class="col-12 col-lg-6 text-center">
+                <form action="">
+
+                    <div class="container d-flex justify-content-center px-5">
+                        <input id="movieName" type="text" class="form-control " placeholder="Search Movie">
+                        <input type="button" value="Submit" class="btn btn-primary ms-3" onclick="fetchData()">
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-3 bg-secondary-subtle py-3 rounded" id="result">
+        
+    </div>
+
+</body>
+<script>
+    function fetchData() {
+        
+        fetch(`https://www.omdbapi.com/?t=${movieName.value}&apikey=1bbbe537`)
+            .then(response => response.json())
+            .then(data => display(data))
+            .catch(error => console.log(error))
+
+    }
+    function display(data) {
+        
+        htmldata = `
+                        <div class="container w-50">
+                            <div class="row ">
+                                <div class="col-12 col-lg-6 p-4 d-flex justify-content-center ">
+                                    <img src="${data.Poster}"
+                                        alt="" class="logo rounded">
+
+                                </div>
+                                <div class="col-12 col-lg-6 pt-5 text-center">
+                                    <h4 class="text-primary-emphasis fw-bold">${data.Title}</h4>
+                                    <h6 class="text-bold mt-2">Director :${data.Director}</h6>
+                                    <h6 class="text-bold mt-2">Writer : ${data.Writer}</h6>
+                                    <h6 class="text-bold mt-2">Actors :${data.Actors}</h6>
+                                    <h6 class="text-bold mt-2">Genre :${data.Genre}</h6>
+                                    <h6 class="text-bold mt-2">imdbRating :${data.imdbRating}</h6>
+                                                    
+
+                                </div>
+                            </div>
+                        </div>`
+        result.innerHTML=htmldata
+        
+
+    }
+
+
+
+
+</script>
+
+</html>
